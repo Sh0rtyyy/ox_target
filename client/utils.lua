@@ -28,7 +28,7 @@ function utils.raycastFromCamera(flag)
 end
 
 function utils.getTexture()
-    return lib.requestStreamedTextureDict('shared'), 'emptydot_32'
+    return lib.requestStreamedTextureDict('inspired_target'), 'point'
 end
 
 -- SetDrawOrigin is limited to 32 calls per frame. Set as 0 to disable.
@@ -36,14 +36,15 @@ local drawZoneSprites = GetConvarInt('ox_target:drawSprite', 24)
 local SetDrawOrigin = SetDrawOrigin
 local DrawSprite = DrawSprite
 local ClearDrawOrigin = ClearDrawOrigin
-local colour = vector(155, 155, 155, 175)
-local hover = vector(98, 135, 236, 255)
+local colour = vector(0, 230, 128, 255)
+local hover = vector(0, 255, 200, 185)
 local currentZones = {}
 local previousZones = {}
 local drawZones = {}
 local drawN = 0
 local width = 0.02
 local height = width * GetAspectRatio(false)
+local textureHover = lib.requestStreamedTextureDict('inspired_target'), 'selected'
 
 if drawZoneSprites == 0 then drawZoneSprites = -1 end
 
@@ -109,8 +110,15 @@ function utils.drawZoneSprites(dict, texture)
 
         if zone.drawSprite ~= false then
             SetDrawOrigin(zone.coords.x, zone.coords.y, zone.coords.z)
-            DrawSprite(dict, texture, 0, 0, width, height, 0, spriteColour.r, spriteColour.g, spriteColour.b,
-                spriteColour.a)
+
+            local dict_hover = 'inspired_target'
+            local texture_hover = 'selected'
+
+            if zone.colour == hover then 
+                DrawSprite(dict_hover, texture_hover, 0, 0, width, height, 0, spriteColour.r, spriteColour.g, spriteColour.b, spriteColour.a)
+            else 
+                DrawSprite(dict, texture, 0, 0, width, height, 0, spriteColour.r, spriteColour.g, spriteColour.b, spriteColour.a)
+            end
         end
     end
 

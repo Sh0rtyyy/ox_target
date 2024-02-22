@@ -10,10 +10,10 @@ end)
 if GetConvarInt('ox_target:debug', 0) ~= 1 then return end
 
 local ox_target = exports.ox_target
-local drawZones = true
+local drawZones = false
 
 ox_target:addBoxZone({
-    coords = vec3(442.5363, -1017.666, 28.85637),
+    coords = vec3(446.61, -1005.58, 27.19),
     size = vec3(3, 3, 3),
     rotation = 45,
     debug = drawZones,
